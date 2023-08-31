@@ -16,13 +16,12 @@ public class Main {
         precisao = 0.003;
         if (converge(matriz)) {
             jacobi(matriz, y);
-            System.out.println(atual);
         }
     }
 
     public static void jacobi(double[][] matriz, double[] y) {
         //tem que checar aqui se a diferença é menor que o erro
-        if (!anterior.isEmpty() && !atual.isEmpty()) {
+        if (!anterior.isEmpty()) {
             for (int i = 0; i < size; i++) {
                 if (Math.abs(atual.get(i) - anterior.get(i)) < precisao) {
                     if (i == size - 1) {
@@ -34,26 +33,28 @@ public class Main {
             }
         }
 
-        Collections.copy(anterior, atual);
 
         if (anterior.isEmpty()) {
             for (int i = 0; i < size; i++) {
                  anterior.add((double) 0);
+                 atual.add((double) 0);
             }
         } else {
+            Collections.copy(anterior, atual);
             atual.clear();
             for (int i = 0; i < size; i++) {
-                double teste = y[i];
+                double x = y[i];
                 for (int j = 0; j < size; j++) { //itera pelos números de uma determinada linha
                     if (i != j) { //apenas se o número não for o que está sendo isolado
-                        teste = teste - (matriz[i][j] * anterior.get(j));
+                        x = x - (matriz[i][j] * anterior.get(j));
                     }
                 }
-                teste = teste / matriz[i][i];
-                atual.add(teste);
+                x = x / matriz[i][i];
+                atual.add(x);
             }
         }
-        jacobi(matriz, y); //recursividade foda
+        System.out.println(atual);
+        jacobi(matriz, y); //recursividade
     }
 
     public static boolean converge(double[][] matriz) {
