@@ -16,12 +16,13 @@ public class Main {
         precisao = 0.003;
         if (converge(matriz)) {
             jacobi(matriz, y);
+            System.out.println(atual);
         }
     }
 
     public static void jacobi(double[][] matriz, double[] y) {
         //tem que checar aqui se a diferença é menor que o erro
-        if (!anterior.isEmpty()) {
+        if (!anterior.isEmpty() && !atual.isEmpty()) {
             for (int i = 0; i < size; i++) {
                 if (Math.abs(atual.get(i) - anterior.get(i)) < precisao) {
                     if (i == size - 1) {
@@ -37,7 +38,6 @@ public class Main {
         if (anterior.isEmpty()) {
             for (int i = 0; i < size; i++) {
                  anterior.add((double) 0);
-                 atual.add((double) 0);
             }
         } else {
             Collections.copy(anterior, atual);
